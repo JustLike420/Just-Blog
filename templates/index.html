@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
-                    <h1>Bootstrap 4 Blog - A free template by Bootstrap Temple</h1><a href="#" class="hero-link">Discover
+                    <h1>Just Blog - second django blog project</h1><a href="#" class="hero-link">Discover
                     More</a>
                 </div>
             </div>
@@ -37,16 +37,16 @@
             <!-- Post-->
             {% for post in posts %}
                 <div class="row d-flex align-items-stretch">
-                {% if not forloop.first and not forloop.last %}
-                    <div class="image col-lg-5"><img src="{{ post.photo.url }}" alt="..."></div>
-                {% endif %}
+                    {% if not forloop.first and not forloop.last %}
+                        <div class="image col-lg-5"><img src="{{ post.photo.url }}" alt="..."></div>
+                    {% endif %}
                     <div class="text col-lg-7">
                         <div class="text-inner d-flex align-items-center">
                             <div class="content">
                                 <header class="post-header">
                                     <div class="category">
-                                        {% for cat in posts.categories %}
-                                            <a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a>
+                                        {% for cat in post.category.all %}
+                                            <a href="#">{{ cat }}</a>
                                         {% endfor %}
                                     </div>
                                     <a href="{{ post.get_absolute_url }}">
@@ -66,13 +66,11 @@
                             </div>
                         </div>
                     </div>
-                {% if forloop.first or forloop.last %}
-                    <div class="image col-lg-5"><img src="{{ post.photo.url }}" alt="..."></div>
-                {% endif %}
+                    {% if forloop.first or forloop.last %}
+                        <div class="image col-lg-5"><img src="{{ post.photo.url }}" alt="..."></div>
+                    {% endif %}
                 </div>
             {% endfor %}
-
-
         </div>
     </section>
     <!-- Divider Section-->
@@ -97,70 +95,27 @@
                 <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </header>
             <div class="row">
-                <div class="post col-md-4">
-                    <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-1.jpg' %}" alt="..."
-                                                                         class="img-fluid"></a></div>
-                    <div class="post-details">
-                        <div class="post-meta d-flex justify-content-between">
-                            <div class="date">20 May | 2016</div>
-                            <div class="category"><a href="#">Business</a></div>
-                        </div>
-                        <a href="post.html">
-                            <h3 class="h4">Ways to remember your important ideas</h3></a>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore.</p>
-                    </div>
-                </div>
-                <div class="post col-md-4">
-                    <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-2.jpg' %}" alt="..."
-                                                                         class="img-fluid"></a></div>
-                    <div class="post-details">
-                        <div class="post-meta d-flex justify-content-between">
-                            <div class="date">20 May | 2016</div>
-                            <div class="category"><a href="#">Technology</a></div>
-                        </div>
-                        <a href="post.html">
-                            <h3 class="h4">Diversity in Engineering: Effect on Questions</h3></a>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore.</p>
-                    </div>
-                </div>
-                <div class="post col-md-4">
-                    <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-3.jpg' %}" alt="..."
-                                                                         class="img-fluid"></a></div>
-                    <div class="post-details">
-                        <div class="post-meta d-flex justify-content-between">
-                            <div class="date">20 May | 2016</div>
-                            <div class="category"><a href="#">Financial</a></div>
-                        </div>
-                        <a href="post.html">
-                            <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Newsletter Section-->
-    <section class="newsletter no-padding-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Subscribe to Newsletter</h2>
-                    <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-holder">
-                        <form action="#">
-                            <div class="form-group">
-                                <input type="email" name="email" id="email" placeholder="Type your email address">
-                                <button type="submit" class="submit">Subscribe</button>
+                {% for post in posts %}
+                    <div class="post col-md-4">
+                        <div class="post-thumbnail">
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.photo.url }}" alt="..."
+                                     class="img-fluid"></a></div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="date">{{ post.created_at|date:"d M" }} | {{ post.created_at|date:"Y" }}</div>
+                                <div class="category">
+                                    {% for cat in post.category.all %}
+                                        <a href="#">{{ cat }}</a>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </form>
+                            <a href="{{ post.get_absolute_url }}">
+                                <h3 class="h4">{{ post.title }}</h3></a>
+                            <p class="text-muted">{{ post.content|truncatewords_html:15|safe }}</p>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -197,7 +152,5 @@
             </div>
         </div>
     </section>
-
-
 
 {% endblock %}

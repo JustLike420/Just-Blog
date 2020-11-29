@@ -55,7 +55,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
     photo = models.ImageField(blank=True, default='photo.png', verbose_name='Фото')
     views = models.IntegerField(default=0, verbose_name='Кол-во просмотров')
-    category = models.ManyToManyField(Category, verbose_name='Категория')
+    category = models.ManyToManyField(Category, related_name='posts')
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts', verbose_name='Тег')
 
     def __str__(self):
