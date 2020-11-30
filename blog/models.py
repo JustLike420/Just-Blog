@@ -54,6 +54,7 @@ class Post(models.Model):
     content = CKEditor5Field('Text', config_name='extends')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
     photo = models.ImageField(blank=True, default='photo.png', verbose_name='Фото')
+    comments = models.IntegerField(default=0, verbose_name='Кол-во комментариев')
     views = models.IntegerField(default=0, verbose_name='Кол-во просмотров')
     category = models.ManyToManyField(Category, related_name='posts')
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts', verbose_name='Тег')
@@ -61,8 +62,8 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    #def get_absolute_url(self):  # формирование ссылки
-     #   return reverse('post', kwargs={"slug": self.slug})
+    def get_absolute_url(self):  # формирование ссылки
+        return reverse('post', kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'Статью'
