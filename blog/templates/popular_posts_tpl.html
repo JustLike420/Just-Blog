@@ -1,0 +1,23 @@
+<div class="widget latest-posts">
+    <h3 class="h6">Latest Posts</h3>
+    {% for post in posts %}
+    <div class="blog-posts"><a href="{{ post.get_absolute_url }}">
+        <div class="item d-flex align-items-center">
+            {% if post.photo %}
+            <div class="image"><img src="{{ post.photo.url }}" alt="{{ post.title }}"
+                                    class="img-fluid"></div>
+            {% else %}
+            <div class="image"><img src="https://picsum.photos/id/237/300/201/&blur=2" alt="{{ post.title }}"
+                                    class="img-fluid"></div>
+            {% endif %}
+            <div class="title"><strong>{{ post.title }}</strong>
+                <div class="d-flex align-items-center">
+                    <div class="views"><i class="icon-eye"></i>{{ post.views }}</div>
+                    <div class="comments"><i class="icon-comment"></i>{{ post.comments }}</div>
+                </div>
+            </div>
+        </div>
+    </a>
+    </div>
+    {% endfor %}
+</div>

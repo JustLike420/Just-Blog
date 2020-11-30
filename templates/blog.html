@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load sidebar %}
 
     <div class="container">
         <div class="row">
@@ -11,12 +12,13 @@
                         {% for post in posts %}
                             <!-- post -->
                             <div class="post col-xl-6">
-                                <div class="post-thumbnail"><a href="post.html"><img
+                                <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img
                                         src="{{ post.photo.url }}" alt="..."
                                         class="img-fluid"></a></div>
                                 <div class="post-details">
                                     <div class="post-meta d-flex justify-content-between">
-                                        <div class="date meta-last">{{ post.created_at|date:"d M" }} | {{ post.created_at|date:"Y" }}</div>
+                                        <div class="date meta-last">{{ post.created_at|date:"d M" }}
+                                            | {{ post.created_at|date:"Y" }}</div>
                                         {% for cat in post.category.all %}
                                             <div class="category"><a href="#">{{ cat }}</a></div>
                                         {% endfor %}
@@ -30,26 +32,18 @@
                                                                  class="img-fluid"></div>
                                         <div class="title"><span>{{ post.author }}</span></div>
                                     </a>
-                                        <div class="date"><i class="icon-clock"></i>{{ post.created_at|timesince }} назад</div>
-                                        <div class="comments meta-last"><i class="icon-comment"></i>{{ post.comment_count }}</div>
+                                        <div class="date"><i class="icon-clock"></i>{{ post.created_at|timesince }}
+                                            назад
+                                        </div>
+                                        <div class="comments meta-last"><i
+                                                class="icon-comment"></i>{{ post.comment_count }}</div>
                                     </footer>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     <!-- Pagination -->
-                {% include 'inc/_pagination.html' %}
-{#                    <nav aria-label="Page navigation example">#}
-{#                        <ul class="pagination pagination-template d-flex justify-content-center">#}
-{#                            <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a>#}
-{#                            </li>#}
-{#                            <li class="page-item"><a href="#" class="page-link active">1</a></li>#}
-{#                            <li class="page-item"><a href="#" class="page-link">2</a></li>#}
-{#                            <li class="page-item"><a href="#" class="page-link">3</a></li>#}
-{#                            <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </nav>#}
+                    {% include 'inc/_pagination.html' %}
                 </div>
             </main>
             <aside class="col-lg-4">
@@ -66,45 +60,7 @@
                     </form>
                 </div>
                 <!-- Widget [Latest Posts Widget]        -->
-                <div class="widget latest-posts">
-                    <header>
-                        <h3 class="h6">Latest Posts</h3>
-                    </header>
-                    <div class="blog-posts"><a href="#">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="{% static 'img/small-thumbnail-1.jpg' %}" alt="..."
-                                                    class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div>
-                    </a><a href="#">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="{% static 'img/small-thumbnail-2.jpg' %}" alt="..."
-                                                    class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div>
-                    </a><a href="#">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="{% static 'img/small-thumbnail-3.jpg' %}" alt="..."
-                                                    class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div>
-                    </a></div>
-                </div>
+                {% get_popular %}
                 <!-- Widget [Categories Widget]-->
                 <div class="widget categories">
                     <header>
