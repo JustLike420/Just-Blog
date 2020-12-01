@@ -58,11 +58,13 @@ class Post(models.Model):
     views = models.IntegerField(default=0, verbose_name='Кол-во просмотров')
     category = models.ManyToManyField(Category, related_name='posts')
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts', verbose_name='Тег')
+    previous_post = models.ForeignKey('self', related_name='previous', on_delete=models.SET_NULL, blank=True, null=True)
+    next_post = models.ForeignKey('self', related_name='next', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):  # формирование ссылки
+    def get_absolute_url(self):  # формирование ссылки 'posts' - name in urls
         return reverse('post', kwargs={"slug": self.slug})
 
     class Meta:

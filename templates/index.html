@@ -103,7 +103,8 @@
                                      class="img-fluid"></a></div>
                         <div class="post-details">
                             <div class="post-meta d-flex justify-content-between">
-                                <div class="date">{{ post.created_at|date:"d M" }} | {{ post.created_at|date:"Y" }}</div>
+                                <div class="date">{{ post.created_at|date:"d M" }}
+                                    | {{ post.created_at|date:"Y" }}</div>
                                 <div class="category">
                                     {% for cat in post.category.all %}
                                         <a href="#">{{ cat }}</a>
