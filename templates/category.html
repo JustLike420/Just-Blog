@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{#<h2>This is result of your search</h2>#}
-{#    {% for post in posts %}#}
-{#        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
-{#    {% endfor %}#}
-
     <section class="latest-posts">
         <div class="container">
             <header>
-                <h2>This is the result of your search</h2>
+
+                <h2>{{ posts.category }}</h2>
             </header>
             <div class="row">
                 {% for post in posts %}

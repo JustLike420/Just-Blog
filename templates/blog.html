@@ -21,7 +21,7 @@
                                             | {{ post.created_at|date:"Y" }}</div>
                                         <div class="category">
                                             {% for cat in post.category.all %}
-                                                <a href="#">{{ cat }}</a>
+                                                <a href="{{ cat.get_absolute_url }}">{{ cat }}</a>
                                             {% endfor %}
 
                                         </div>

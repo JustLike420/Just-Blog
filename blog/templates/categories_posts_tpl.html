@@ -4,7 +4,7 @@
     </header>
     {% for cat in categories %}
         <div class="item d-flex justify-content-between">
-            <a href="#">{{ cat.title }}</a>
+            <a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a>
         </div>
     {% endfor %}
 </div>

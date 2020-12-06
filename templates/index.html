@@ -46,7 +46,7 @@
                                 <header class="post-header">
                                     <div class="category">
                                         {% for cat in post.category.all %}
-                                            <a href="#">{{ cat }}</a>
+                                            <a href="{{ cat.get_absolute_url }}">{{ cat }}</a>
                                         {% endfor %}
                                     </div>
                                     <a href="{{ post.get_absolute_url }}">
@@ -107,7 +107,7 @@
                                     | {{ post.created_at|date:"Y" }}</div>
                                 <div class="category">
                                     {% for cat in post.category.all %}
-                                        <a href="#">{{ cat }}</a>
+                                        <a href="{{ cat.get_absolute_url }}">{{ cat }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
