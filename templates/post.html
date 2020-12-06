@@ -41,8 +41,7 @@
 
                             <div class="post-tags">
                                 {% for tag in post.tags.all %}
-                                    <a href="#" class="tag">#{{ tag }}</a><a href="#"
-                                                                             class="tag">#Tricks</a>
+                                    <a href="{{ tag.get_absolute_url }}" class="tag">#{{ tag }}</a>
                                 {% endfor %}
                             </div>
                             <!-- Pagination -->
