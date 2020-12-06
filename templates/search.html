@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{#<h2>This is result of your search</h2>#}
+{#    {% for post in posts %}#}
+{#        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
+{#    {% endfor %}#}
+
+    <section class="latest-posts">
+        <div class="container">
+            <header>
+                <h2>This is the result of your search</h2>
+            </header>
+            <div class="row">
+                {% for post in posts %}
+                    <div class="post col-md-4">
+                        <div class="post-thumbnail">
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ post.photo.url }}" alt="..."
+                                     class="img-fluid"></a></div>
+                        <div class="post-details">
+                            <div class="post-meta d-flex justify-content-between">
+                                <div class="date">{{ post.created_at|date:"d M" }}
+                                    | {{ post.created_at|date:"Y" }}</div>
+                                <div class="category">
+                                    {% for cat in post.category.all %}
+                                        <a href="#">{{ cat }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <a href="{{ post.get_absolute_url }}">
+                                <h3 class="h4">{{ post.title }}</h3></a>
+                            <p class="text-muted">{{ post.content|truncatewords_html:15|safe }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
