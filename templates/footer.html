@@ -15,6 +15,8 @@
                         </li>
                         <li class="list-inline-item"><a href="https://www.instagram.com/justlike2k19/"><i
                                 class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="https://github.com/JustLike420"><i
+                                class="fa fa-github"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -36,21 +38,21 @@
             </div>
             <div class="col-md-4">
                 <div class="latest-posts">
-                <div class="logo">
-                    <h6 class="text-white">Latest posts</h6>
-                </div>
+                    <div class="logo">
+                        <h6 class="text-white">Latest posts</h6>
+                    </div>
                     {% for post in posts %}
                         <div class="contact-details">
-                        <a href="{{ post.get_absolute_url }}">
-                            <div class="post d-flex align-items-center">
-                                <div class="image"><img src="{{ post.photo.url }}" alt="..."
-                                                        class="img-fluid"></div>
-                                <div class="title">
-                                    <strong>{{ post.title }}</strong>
-                                    <span class="date last-meta">{{ post.created_at|date:"F d, Y" }}</span>
+                            <a href="{{ post.get_absolute_url }}">
+                                <div class="post d-flex align-items-center">
+                                    <div class="image"><img src="{{ post.photo.url }}" alt="..."
+                                                            class="img-fluid"></div>
+                                    <div class="title">
+                                        <strong>{{ post.title }}</strong>
+                                        <span class="date last-meta">{{ post.created_at|date:"F d, Y" }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
