@@ -6,6 +6,9 @@ from .views import *
 
 urlpatterns = [
     path('', Home.as_view(), name='home') ,
+    path('register/', register, name='register'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
     path('blog/', Get_Posts.as_view(), name='posts'),
     path('post/<str:slug>/', Get_Post.as_view(), name='post'),
     path('search/', Search.as_view(), name='search'),

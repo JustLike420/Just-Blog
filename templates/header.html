@@ -34,9 +34,18 @@
                     <li class="nav-item"><a href="/blog" class="nav-link ">Blog</a>
                     </li>
                 </ul>
+                {% if request.user.is_authenticated %}
+                    Добро пожаловать, {{ user.username }}
+                    <a href="{% url 'logout' %}" class="nav-link ">Logout</a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="nav-link ">Register</a>|
+                    <a href="{% url 'login' %}" class="nav-link ">Login</a>
+                {% endif %}
                 <div class="navbar-text"><a href="#" class="search-btn"><i class="icon-search-1"></i></a></div>
-                {#                <ul class="langs navbar-text"><a href="#" class="active">EN</a><span>           </span><a#}
-                {#                        href="#">ES</a></ul>#}
+                {% comment %}
+                <ul class="langs navbar-text"><a href="#" class="active">EN</a><span>           </span><a
+                        href="#">ES</a></ul>
+                {% endcomment %}
             </div>
         </div>
     </nav>
