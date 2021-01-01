@@ -11,7 +11,7 @@
                     <div class="row">
                         {% for post in posts %}
                             <!-- post -->
-                            <div class="post col-xl-6">
+                                <div class="post col-xl-6">
                                 <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img
                                         src="{{ post.photo.url }}" alt="..."
                                         class="img-fluid"></a></div>
@@ -31,9 +31,9 @@
                                     <p class="text-muted">{{ post.content|truncatewords_html:40|safe }}</p>
                                     <footer class="post-footer d-flex align-items-center"><a href="#"
                                                                                              class="author d-flex align-items-center flex-wrap">
-                                        <div class="avatar"><img src="{{ post.author.profile_pic.url }}" alt="..."
-                                                                 class="img-fluid"></div>
-                                        <div class="title"><span>{{ post.author }}</span></div>
+{#                                        <div class="avatar"><img src="{{ post.user.profile_pic.url }}" alt="..."#}
+{#                                                                 class="img-fluid"></div>#}
+                                        <div class="title"><span>sdf</span></div>
                                     </a>
                                         <div class="date"><i class="icon-clock"></i>{{ post.created_at|timesince }}
                                             ago

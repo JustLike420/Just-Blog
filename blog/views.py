@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, F
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from blog.models import Post, Category, Tag
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, PostCreateForm
 from django.contrib.auth import login, logout
 
 
@@ -38,6 +39,31 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('/')
+
+
+# def post_create(request):
+#     if request.method == 'POST':
+#         form = PostCreateForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new = form.save(commit=False)
+#             new.user = request.user
+#             new.save()
+#             return redirect('home')
+#     else:
+#         form = PostCreateForm()
+#     return render(request, 'new_post.html', {'form': form})
+
+class CreatePost(LoginRequiredMixin, CreateView):
+    form_class = PostCreateForm
+    template_name = 'new_post.html'
+
+    # баг, не добавляется тег и категория, но добавляеться пользователь
+    # если убрать, то будет добавляться тег и категория, но не будет добавляться пользователь
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return redirect(self.get_success_url())
 
 
 class Home(ListView):

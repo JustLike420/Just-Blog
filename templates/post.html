@@ -23,9 +23,9 @@
                                     class="fa fa-bookmark-o"></i></a></h1>
                             <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#"
                                                                                                           class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="{{ post.author.profile_pic.url }}" alt="..."
-                                                         class="img-fluid"></div>
-                                <div class="title"><span>{{ post.author }}</span></div>
+{#                                <div class="avatar"><img src="{{ post.author.profile_pic.url }}" alt="..."#}
+{#                                                         class="img-fluid"></div>#}
+                                <div class="title"><span>{{ post.user.username }}</span></div>
                             </a>
                                 <div class="d-flex align-items-center flex-wrap">
                                     <div class="date"><i class="icon-clock"></i> {{ post.created_at|timesince }} ago

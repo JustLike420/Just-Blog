@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Tag, Post, Category, Author
+from .models import Tag, Post, Category
 
 
 # Register your models here.
@@ -15,10 +15,10 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
+    # prepopulated_fields = {"slug": ("title",)}
     save_as = True
     save_on_top = True
-    list_display = ('id', 'title', 'created_at', 'author', 'get_photo')
+    list_display = ('id', 'slug', 'title', 'created_at', 'user', 'get_photo')
     list_display_links = ('id', 'title')
     search_fields = ('title',)
     list_filter = ('category', 'tags')
@@ -35,4 +35,3 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Author)
