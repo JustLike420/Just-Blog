@@ -41,29 +41,30 @@ def user_logout(request):
     return redirect('/')
 
 
-# def post_create(request):
-#     if request.method == 'POST':
-#         form = PostCreateForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             new = form.save(commit=False)
-#             new.user = request.user
-#             new.save()
-#             return redirect('home')
-#     else:
-#         form = PostCreateForm()
-#     return render(request, 'new_post.html', {'form': form})
+def post_create(request):
+    form = PostCreateForm(request.POST or None, request.FILES or None)
+    author = request.user
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.user = author
+            form.save()
+            return redirect('home')
+    else:
+        form = PostCreateForm()
+    return render(request, 'new_post.html', {'form': form})
 
-class CreatePost(LoginRequiredMixin, CreateView):
-    form_class = PostCreateForm
-    template_name = 'new_post.html'
 
-    # баг, не добавляется тег и категория, но добавляеться пользователь
-    # если убрать, то будет добавляться тег и категория, но не будет добавляться пользователь
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        self.object.save()
-        return redirect(self.get_success_url())
+# class CreatePost(LoginRequiredMixin, CreateView):
+#     form_class = PostCreateForm
+#     template_name = 'new_post.html'
+#
+#     # баг, не добавляется тег и категория, но добавляеться пользователь
+#     # если убрать, то будет добавляться тег и категория, но не будет добавляться пользователь
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.user = self.request.user
+#         self.object.save()
+#         return redirect(self.get_success_url())
 
 
 class Home(ListView):
