@@ -23,7 +23,6 @@
                                             {% for cat in post.category.all %}
                                                 <a href="{{ cat.get_absolute_url }}">{{ cat }}</a>
                                             {% endfor %}
-
                                         </div>
                                     </div>
                                     <a href="{{ post.get_absolute_url }}">
@@ -33,7 +32,7 @@
                                                                                              class="author d-flex align-items-center flex-wrap">
 {#                                        <div class="avatar"><img src="{{ post.user.profile_pic.url }}" alt="..."#}
 {#                                                                 class="img-fluid"></div>#}
-                                        <div class="title"><span>sdf</span></div>
+                                        <div class="title"><span>{{ post.user.username }}</span></div>
                                     </a>
                                         <div class="date"><i class="icon-clock"></i>{{ post.created_at|timesince }}
                                             ago

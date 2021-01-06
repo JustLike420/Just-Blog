@@ -1,12 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, F
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import FormMixin
+
 from blog.models import Post, Category, Tag
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm, PostCreateForm
+from .forms import UserRegisterForm, UserLoginForm, PostCreateForm, CommentCreateForm
 from django.contrib.auth import login, logout
 
+
+# Work with user
 
 def register(request):
     if request.method == 'POST':
@@ -41,30 +46,28 @@ def user_logout(request):
     return redirect('/')
 
 
-def post_create(request):
-    form = PostCreateForm(request.POST or None, request.FILES or None)
-    author = request.user
-    if request.method == 'POST':
-        if form.is_valid():
-            form.instance.user = author
-            form.save()
-            return redirect('home')
-    else:
-        form = PostCreateForm()
-    return render(request, 'new_post.html', {'form': form})
+# work with posts
+class CreatePost(CreateView):
+    form_class = PostCreateForm
+    template_name = 'new_post.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return redirect('home')
 
 
-# class CreatePost(LoginRequiredMixin, CreateView):
-#     form_class = PostCreateForm
-#     template_name = 'new_post.html'
-#
-#     # баг, не добавляется тег и категория, но добавляеться пользователь
-#     # если убрать, то будет добавляться тег и категория, но не будет добавляться пользователь
-#     def form_valid(self, form):
-#         self.object = form.save(commit=False)
-#         self.object.user = self.request.user
-#         self.object.save()
-#         return redirect(self.get_success_url())
+# def post_create(request):
+#     form = PostCreateForm(request.POST or None, request.FILES or None)
+#     author = request.user
+#     if request.method == 'POST':
+#         if form.is_valid():
+#             form.instance.user = author
+#             form.save()
+#             return redirect('home')
+#     else:
+#         form = PostCreateForm()
+#     return render(request, 'new_post.html', {'form': form})
 
 
 class Home(ListView):
@@ -90,6 +93,38 @@ class Get_Posts(ListView):
         context['title'] = 'Blog'
         return context
 
+
+class Get_Post(DetailView, FormMixin):
+    model = Post
+    template_name = 'post.html'
+    context_object_name = 'post'
+    form_class = CommentCreateForm
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('post', kwargs={'slug': self.get_object().slug})
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object.views = F('views') + 1
+        self.object.save()
+        self.object.refresh_from_db()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post = self.get_object()
+        form.save()
+        return super().form_valid(form)
+
+
+# Search or filtered posts
 
 class Search(ListView):
     template_name = 'search.html'
@@ -131,24 +166,3 @@ class Post_By_Tag(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = Tag.objects.get(slug=self.kwargs['slug'])
         return context
-
-
-class Get_Post(DetailView):
-    model = Post
-    template_name = 'post.html'
-    context_object_name = 'post'
-
-    def get_context_data(self, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        self.object.views = F('views') + 1
-        self.object.save()
-        self.object.refresh_from_db()
-        return context
-
-
-def blog(request):
-    return render(request, 'blog.html', {})
-
-
-def post(request, slug):
-    return render(request, 'post.html')

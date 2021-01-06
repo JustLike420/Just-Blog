@@ -71,7 +71,25 @@ class Post(models.Model):
     def get_absolute_url(self):  # формирование ссылки 'posts' - name in urls
         return reverse('post', kwargs={"slug": self.slug})
 
+    @property
+    def get_comments(self):
+        return self.comments.all()
+
     class Meta:
         verbose_name = 'Статью'
         verbose_name_plural = 'Статьи'
         ordering = ['-created_at']  # сортирока по дате в обратном порядке от нового к старому
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', null=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
+    text = models.TextField()
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'

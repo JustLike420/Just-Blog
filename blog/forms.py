@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Comment
 
 
 class UserLoginForm(AuthenticationForm):
@@ -31,4 +31,18 @@ class PostCreateForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'category': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': "Type your comment",
+                'id': "usercomment",
+                'rows': '4',
+            }),
         }
