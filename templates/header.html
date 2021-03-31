@@ -38,7 +38,7 @@
                     {% endif %}
                 </ul>
                 {% if request.user.is_authenticated %}
-                    Добро пожаловать, {{ user.username }}
+                    Hello, {{ user.username }}
                     <a href="{% url 'logout' %}" class="nav-link ">Logout</a>
                 {% else %}
                     <a href="{% url 'register' %}" class="nav-link ">Register</a>|
