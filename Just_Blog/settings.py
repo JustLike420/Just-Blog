@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'blog',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -231,3 +232,9 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+# smpt
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'justlikedjango123@gmail.com'
+EMAIL_HOST_PASSWORD = 'mWu597BQY3vr1C44'
+EMAIL_PORT = '587'

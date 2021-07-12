@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load sidebar %}
+{% load contact_tags %}
 {% load static %}
 {% block content %}
 
@@ -101,6 +102,9 @@
                 {% get_cat %}
                 <!-- Widget [Tags Cloud Widget]-->
                 {% get_tag %}
+
+                {% contact_form %}
+
             </aside>
         </div>
     </div>

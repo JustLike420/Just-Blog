@@ -1,0 +1,13 @@
+<div class="widget search">
+    <header>
+        <h3 class="h6">Subscribing</h3>
+    </header>
+    <form action="{% url 'contact' %}" method="post" class="search-form">
+        {% csrf_token %}
+        <div class="form-group">
+{#            <input type="search" name="s" placeholder="Email">#}
+            {{ contact_form }}
+            <button type="submit" value="Search" class="submit"></button>
+        </div>
+    </form>
+</div>
